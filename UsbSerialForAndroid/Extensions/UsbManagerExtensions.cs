@@ -27,11 +27,22 @@ namespace Hoho.Android.UsbSerial.Util
             var completionSource = new TaskCompletionSource<bool>();
 
             var usbPermissionReceiver = new UsbPermissionReceiver(completionSource);
-            context.RegisterReceiver(usbPermissionReceiver, new IntentFilter(ACTION_USB_PERMISSION));
-
+            context.RegisterReceiver(usbPermissionReceiver, new IntentFilter(ACTION_USB_PERMISSION), ReceiverFlags.Exported);
+            
             // Targeting S+ (version 31 and above) requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE be specified when creating a PendingIntent.
 #if NET6_0_OR_GREATER
-            PendingIntentFlags pendingIntentFlags = Build.VERSION.SdkInt >= BuildVersionCodes.S ? PendingIntentFlags.Mutable : 0;
+            PendingIntentFlags pendingIntentFlags = 0;
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+            {
+                // For Android 12 (API 31) and above
+                pendingIntentFlags |= PendingIntentFlags.Mutable;
+            }
+
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.UpsideDownCake)
+            {
+                // For Android 14 (API 34) and above
+                pendingIntentFlags |= PendingIntentFlags.AllowUnsafeImplicitIntent;
+            }
 #else
             PendingIntentFlags pendingIntentFlags = Build.VERSION.SdkInt >= (BuildVersionCodes)31 ? (PendingIntentFlags).33554432 : 0;
 #endif
@@ -43,7 +54,7 @@ namespace Hoho.Android.UsbSerial.Util
             return completionSource.Task;
         }
 
-        class UsbPermissionReceiver: BroadcastReceiver
+        private class UsbPermissionReceiver: BroadcastReceiver
         {
             readonly TaskCompletionSource<bool> completionSource;
 

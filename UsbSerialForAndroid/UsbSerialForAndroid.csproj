@@ -1,10 +1,12 @@
-<Project Sdk="Xamarin.Legacy.Sdk/0.2.0-alpha4">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-android;net7.0-android;monoandroid5.0</TargetFrameworks>
+    <TargetFramework>net8.0-android</TargetFramework>
     <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
-    <Nullable>disable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>Android.UsbSerial</AssemblyName>
     <RootNamespace>Hoho.Android.UsbSerial</RootNamespace>
+    <LangVersion>default</LangVersion>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 </Project>

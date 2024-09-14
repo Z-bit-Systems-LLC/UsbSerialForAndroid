@@ -23,6 +23,7 @@ using Java.Util;
 using Java.IO;
 using Java.Lang;
 using Java.Nio;
+using IOException = System.IO.IOException;
 using Math = System.Math;
 
 namespace Hoho.Android.UsbSerial.Driver

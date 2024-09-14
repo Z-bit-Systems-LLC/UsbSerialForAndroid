@@ -246,3 +246,4 @@ ModelManifest.xml
 
 #Zip files
 *.zip
+/.idea/.idea.UsbSerialForAndroid/.idea
